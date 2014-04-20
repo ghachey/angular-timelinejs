@@ -3,10 +3,10 @@
 describe('Directive: pippTimelineJS', function () {
 
   // load the directive's module
-  beforeEach(module('srcApp'));
+  beforeEach(module('pippTimelineDirectives'));
 
   var element,
-    scope;
+      scope;
 
   beforeEach(inject(function ($rootScope) {
     scope = $rootScope.$new();
@@ -17,4 +17,5 @@ describe('Directive: pippTimelineJS', function () {
     element = $compile(element)(scope);
     expect(element.text()).toBe('this is the pippTimelineJS directive');
   }));
+
 });

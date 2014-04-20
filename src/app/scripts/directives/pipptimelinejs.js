@@ -1,12 +1,12 @@
 'use strict';
 
-angular.module('srcApp')
-  .directive('pippTimelineJS', function () {
-    return {
-      template: '<div></div>',
-      restrict: 'E',
-      link: function postLink(scope, element, attrs) {
-        element.text('this is the pippTimelineJS directive');
-      }
-    };
-  });
+angular.module('pippTimelineDirectives')
+.directive('pippTimelineJS', function () {
+  return {
+    template: '<div></div>',
+    restrict: 'E',
+    link: function postLink(scope, element, attrs) {
+      element.text('this is the pippTimelineJS directive');
+    }
+  };
+});
