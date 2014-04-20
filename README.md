@@ -25,7 +25,7 @@ These requirements are to work *on* the directive (see Contributing below) and n
 
 * NodeJS - Used to run test, deploy distributables, run development web server
 * npm - Manage Javascript packages on the server (i.e. development machine)
-* Grunt - Automated grunt work (testing, deploying, running web server...)
+* Grunt - Automated tasks runner (testing, deploying, running web server...)
 * Bower - Manage packages on the frontend
 * Karma - Run tests
 
