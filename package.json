@@ -3,9 +3,6 @@
   "description": "Angular directive wrapping TimelineJS.",
   "version": "0.1.0",
   "private": false,
-  "scripts": {
-    "start": "node app"
-  },
   "devDependencies": {
     "karma": "^0.12.9",
     "grunt": "^0.4.4",
