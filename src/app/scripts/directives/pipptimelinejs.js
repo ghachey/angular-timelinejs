@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('pippTimelineDirectives')
+angular.module('pippTimelineDirectives', [])
 .directive('pippTimelineJS', function () {
   return {
     template: '<div></div>',
