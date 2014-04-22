@@ -18,8 +18,8 @@ and make sure you inject it in your application:
 angular.module('myModule', ['pippTimelineJS']);
 ```
 
-Requirements
-------------
+Development Requirements
+------------------------
 
 These requirements are to work *on* the directive (see Contributing below) and not the requirements to *use* the directive (see Installation above).
 
@@ -34,7 +34,9 @@ All those should be installed if you need to do work on the directive itself; it
 General Notes
 -------------
 
-The pipp prefix on directive names is the namespace portion as this was initially developed within a project at the Pacific Insitute of Public Policy (PiPP).
+* Namespacing - the pipp prefix on directive names is the namespace portion as this was initially developed within a project at the Pacific Insitute of Public Policy (PiPP).
+* Versioning - should follow the Semantic Versioning formal specifications as described in http://semver.org/.
+* Committing Dependencies
 
 Support
 -------

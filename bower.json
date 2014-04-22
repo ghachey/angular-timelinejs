@@ -1,7 +1,21 @@
 {
-  "name": "pipptimelinejs",
-  "description": "Angular directive wrapping TimelineJS.",
-  "version": "0.1.0",
+  "name": "angular-timelinejs",
+  "description": "NOT USABLE YET. Angular directive wrapping TimelineJS.",
+  "version": "0.0.0",
+  "main": "dist/angular-timelinejs.js",
+    "ignore": [
+      "bower_components",
+      "bower.json",
+      "demo",
+      "docs",
+      "Gruntfile.js",
+      "karma.conf.js",
+      "LICENSE",
+      "node_modules",
+      "package.json",
+      "README.md",
+      ".gitignore"
+    ],
   "dependencies": {
     "angular": "~1.2.16"
   },
