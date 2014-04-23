@@ -15,6 +15,16 @@ module.exports = function(grunt) {
       }
     },
 
+    copy: {
+      main: {
+        files: [
+          // includes files within path
+          {src: ['src/app/scripts/directives/pipptimelinejs.js'],
+           dest: 'build/angular-timelinejs.js'},
+        ]
+      }
+    },
+
     karma: {
       unit: {
         configFile: 'karma.conf.js',
@@ -32,6 +42,7 @@ module.exports = function(grunt) {
 
   // Load the plugins to provide tasks
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-karma');
 
   // Default task(s).
