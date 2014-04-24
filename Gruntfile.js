@@ -18,10 +18,23 @@ module.exports = function(grunt) {
     copy: {
       main: {
         files: [
-          // includes files within path
           {src: ['src/app/scripts/directives/pipptimelinejs.js'],
-           dest: 'build/angular-timelinejs.js'},
+           dest: 'build/angular-timelinejs.js'}
         ]
+      },
+      pipptimeline: {
+        files: [
+          {src: ['src/app/scripts/directives/pipptimelinejs.js'],
+           dest: 'demo/angular-timelinejs-demo/app/bower_components/angular-timelinejs/build/angular-timelinejs.js'}
+        ],
+
+      }
+    },
+
+    watch: {
+      gruntfile: {
+        files: 'src/app/scripts/directives/pipptimelinejs.js',
+        tasks: ['copy:pipptimeline'],
       }
     },
 
@@ -30,12 +43,12 @@ module.exports = function(grunt) {
         configFile: 'karma.conf.js',
         //background: true // don't block other grunt tasks
       },
-//       //continuous integration mode: run tests once in PhantomJS browser.
-//       continuous: {
-//         configFile: 'karma.conf.js',
-//         singleRun: true,
-//         browsers: ['PhantomJS']
-//       }
+      //       //continuous integration mode: run tests once in PhantomJS browser.
+      //       continuous: {
+      //         configFile: 'karma.conf.js',
+      //         singleRun: true,
+      //         browsers: ['PhantomJS']
+      //       }
     }
 
   });
@@ -43,9 +56,10 @@ module.exports = function(grunt) {
   // Load the plugins to provide tasks
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-karma');
 
   // Default task(s).
-  grunt.registerTask('default', ['uglify']);
+  grunt.registerTask('default', ['uglify', 'copy:main', 'watch', 'karma']);
 
 };

@@ -1,4 +1,4 @@
 'use strict';
 
 angular
-  .module('angularTimelinejsDemoApp', []);
+  .module('angularTimelinejsDemoApp', ['pippTimelineDirectives']);
