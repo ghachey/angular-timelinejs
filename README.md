@@ -68,6 +68,14 @@ $scope.data = {
 };
 ```
 
+Examples
+--------
+
+The demo directory contains two web applications: one using TimelineJS with Angular and one using Angular through this directive. This is mainly to help observe difference during development.
+
+To see the examples you can simply `cd` into the example directory and execute `grunt serve` to start a development web server. Then access the example at `http://localhost:9002` or `http://localhost:9003` depending on which one you started.
+
+
 Development Requirements
 ------------------------
 
