@@ -3,10 +3,10 @@
 /**
  * Basic directive wrapping TimelineJS. At the moment, it only binds source
  * data into it's own isolate scope. Will soon take all configuration available
- * to TimelineJS.
+ * to TimelineJS in addition.
  */
 angular.module('pippTimelineDirectives', [])
-.directive('pippTimelineJS', function () {
+.directive('pippTimelineJS', function ($rootScope) {
   return {
     template: '<div id="pipp-timeline"></div>',
     restrict: 'E',
