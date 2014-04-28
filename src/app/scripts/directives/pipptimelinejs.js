@@ -24,46 +24,46 @@ angular.module('pippTimelineDirectives', [])
     },
     link: function postLink(scope, iElement, iAttrs) {
 
-      // Required options
+      //////////////////////
+      // Required options //
+      //////////////////////
+      var width = (scope.width === undefined) ? '960' : scope.width;
+      var height = (scope.height === undefined) ? '540' : scope.height;
       var timeline_conf = {
-        source: scope.source,
-
-        // Ignored at the moment, why?
-        width: (scope.width === undefined) ? '100%' : scope.width,
-
-        // Ignored at the moment, why?
-        height: (scope.height === undefined) ? '400' : scope.height,
+        source: scope.source
       };
 
-      // Optional options
+      //////////////////////
+      // Optional options //
+      //////////////////////
 
       // What are other types? not documented in TimelineJS
       // Not yet available for change to user
-      if (scope.type) timeline_conf[type] = scope.type;
+      if (scope.type) timeline_conf["type"] = scope.type;
 
       // is this used? First glance did not see effect of change
+      // I don't think it is useful when passing id in object instantiation as below
       // Not yet available for change to user
-      if (scope.embed_id) timeline_conf[embed_id] = scope.embed_id;
+      if (scope.embed_id) timeline_conf["embed_id"] = scope.embed_id;
 
       // First glance did not see the effect?
       // Not yet available for change to user
-      if (scope.embed) timeline_conf[embed] = scope.embed;
+      if (scope.embed) timeline_conf["embed"] = scope.embed;
 
-      if (scope.start_at_zoom) timeline_conf[start_at_zoom] = scope.start_at_zoom;
-      if (scope.start_at_slide) timeline_conf[start_at_slide] = scope.start_at_slide;
+      if (scope.start_at_end==='true') timeline_conf["start_at_end"] = true;
+      if (scope.start_zoom_adjust) timeline_conf["start_zoom_adjust"] = scope.start_zoom_adjust;
+      if (scope.start_at_slide) timeline_conf["start_at_slide"] = scope.start_at_slide;
 
       // working, but how to integrate with Angular routing?! Something to ponder
-      if (scope.hash_bookmark) timeline_conf[hash_bookmark] = scope.hash_bookmark;
+      (scope.hash_bookmark==='true') ? timeline_conf["hash_bookmark"] = true :
+                                       timeline_conf["hash_bookmark"] = false;
 
-      if (scope.font) timeline_conf[font] = scope.font;
+      if (scope.font) timeline_conf["font"] = scope.font;
 
-      // seems to debug no matter what?
-      if (scope.debug) timeline_conf[debug] = scope.debug;
-
-      console.log("CONFIG: ", JSON.stringify(timeline_conf));
+      (scope.debug==='true') ? VMM.debug = true : VMM.debug = false;
 
       // Instantiate timeline object and manipulate DOM
-      var timeline = new VMM.Timeline('pipp-timeline');
+      var timeline = new VMM.Timeline('pipp-timeline',width,height);
       timeline.init(timeline_conf);
 
     }

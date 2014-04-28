@@ -232,13 +232,15 @@
 			};
 			var timeline_conf = {
 				type: 'timeline',
-				width: '100%',
-				height: '600',
+				width: '50%',
+				height: '300',
 				source: data,
 				embed_id: 'my-timeline2'
 			};
 
-			var timeline = new VMM.Timeline('my-timeline2');
+			var timeline = new VMM.Timeline('my-timeline2',
+																			timeline_conf['width'],
+																			timeline_conf['height']);
 			timeline.init(timeline_conf);
 		</script>
 

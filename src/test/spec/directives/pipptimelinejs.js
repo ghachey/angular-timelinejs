@@ -6,10 +6,13 @@ describe('Directive: pippTimelineJS', function () {
   beforeEach(module('pippTimelineDirectives'));
 
   var elt,
+      //elt2,
       doc,
+      //doc2,
       scope;
 
   // Compile DOM structure and scope for following unit tests
+  // Compile one for defaults only and one with custom configs
   beforeEach(inject(function ($rootScope, $compile) {
     scope = $rootScope.$new();
     scope.data = {
@@ -152,9 +155,19 @@ describe('Directive: pippTimelineJS', function () {
         ]
       }
     }; // Attach sample data to mock scope
-    elt = angular.element('<pipp-timeline-j-s source-data="data"></pipp-timeline-j-s>');
+    elt = angular.element('<pipp-timeline-j-s source="data"></pipp-timeline-j-s>');
     // Compile our relevent element of interest in isolation for a speed up.
     elt = $compile(elt)(scope);
+//     elt2 = angular.element('<pipp-timeline-j-s source="data" \
+//                                                width="800" \
+//                                                height="600" \
+//                                                start_zoom_adjust="3" \
+//                                                start_at_end="false" \
+//                                                start_at_slide="5" \
+//                                                hash_bookmark="true" \
+//                                                debug="false"></pipp-timeline-j-s>');
+//     // Compile our relevent element of interest in isolation for a speed up.
+//     elt2 = $compile(elt2)(scope);
 
     // Because VMM.timeline search the whole document by id we need to
     // append our isolated element to the whole document DOM which is slower
@@ -162,14 +175,17 @@ describe('Directive: pippTimelineJS', function () {
     elt.appendTo(angular.element(document.body));
     doc = angular.element(document.body);
     doc = $compile(doc)(scope);
+//     elt2.appendTo(angular.element(document.body));
+//     doc2 = angular.element(document.body);
+//     doc2 = $compile(doc2)(scope);
   }));
 
-  it('should contain an isolate scope with timeline data', inject(function ($compile) {
+  it('should contain an isolate scope with timeline data', function () {
     expect(elt.isolateScope().timelineData).not.toBe(null);
-  }));
+  });
 
   // Primitive checks for the TimelineJS modified DOM
-  it('should create nested divs with appropriate classes', inject(function ($compile) {
+  it('should create nested divs with appropriate classes', function () {
     var pippTimelineDirectiveElement = doc.find('pipp-timeline-j-s');
     expect(pippTimelineDirectiveElement.hasClass('ng-isolate-scope')).toBe(true);
 
@@ -181,7 +197,15 @@ describe('Directive: pippTimelineJS', function () {
     var vcoContainerElement = pippTimelineElement.children();
     expect(vcoContainerElement.hasClass('vco-container')).toBe(true);
     expect(vcoContainerElement.hasClass('vco-main')).toBe(true);
-  }));
+  });
 
+  // Two timelinejs directives not yet supported; no need for it except
+  // convenient testing so moving on for now...
+//   it('should correctly use configuration', function () {
+//       console.log("TESTING: ", doc2);
+//     //var pippTimelineElement = doc2.find('pipp-timeline-j-s').children();
+//     //console.log("TESTING: ", pippTimelineElement.attr());
+//     //expect(elt.isolateScope().timelineData).not.toBe(null);
+//   });
 
 });
