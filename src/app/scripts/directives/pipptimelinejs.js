@@ -24,8 +24,6 @@ angular.module('pippTimelineDirectives', [])
     },
     link: function postLink(scope, iElement, iAttrs) {
 
-      console.log("testing: ", scope.startZoomAdjust);
-
       //////////////////////
       // Required options //
       //////////////////////
@@ -65,9 +63,15 @@ angular.module('pippTimelineDirectives', [])
       (scope.debug==='true') ? VMM.debug = true : VMM.debug = false;
 
       // Instantiate timeline object and manipulate DOM
-      var timeline = new VMM.Timeline('pipp-timeline',width,height);
-      console.log("timeline_conf: ", timeline_conf);
+      var timeline = new VMM.Timeline('pipp-timeline', width, height);
       timeline.init(timeline_conf);
+
+      scope.$watch('source', function (newSource, oldSource) {
+        if (!newSource) {
+          return;
+        }
+        timeline.reload(newSource); // when model mutates
+      });
 
     }
   };
