@@ -1,7 +1,7 @@
 {
   "name": "angular-timelinejs",
-  "description": "NOT USABLE YET. Angular directive wrapping TimelineJS.",
-  "version": "0.0.1",
+  "description": "Angular directive wrapping TimelineJS.",
+  "version": "0.1.0",
   "main": "build/angular-timelinejs.js",
   "ignore": [
     "bower_components",
