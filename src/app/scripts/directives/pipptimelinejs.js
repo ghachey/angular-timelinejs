@@ -14,15 +14,17 @@ angular.module('pippTimelineDirectives', [])
       source: '=',
       width: '@',
       height: '@',
-      start_zoom_adjust: '@',
-      start_at_end: '@',
-      start_at_slide: '@',
-      hash_bookmark: '@',
+      startZoomAdjust: '@',
+      startAtEnd: '@',
+      startAtSlide: '@',
+      hashBookmark: '@',
       font: '@',
       lang: '@',
       debug: '@'
     },
     link: function postLink(scope, iElement, iAttrs) {
+
+      console.log("testing: ", scope.startZoomAdjust);
 
       //////////////////////
       // Required options //
@@ -44,18 +46,18 @@ angular.module('pippTimelineDirectives', [])
       // is this used? First glance did not see effect of change
       // I don't think it is useful when passing id in object instantiation as below
       // Not yet available for change to user
-      if (scope.embed_id) timeline_conf["embed_id"] = scope.embed_id;
+      if (scope.embedId) timeline_conf["embed_id"] = scope.embedId;
 
       // First glance did not see the effect?
       // Not yet available for change to user
       if (scope.embed) timeline_conf["embed"] = scope.embed;
 
-      if (scope.start_at_end==='true') timeline_conf["start_at_end"] = true;
-      if (scope.start_zoom_adjust) timeline_conf["start_zoom_adjust"] = scope.start_zoom_adjust;
-      if (scope.start_at_slide) timeline_conf["start_at_slide"] = scope.start_at_slide;
+      if (scope.startAtEnd==='true') timeline_conf["start_at_end"] = true;
+      if (scope.startZoomAdjust) timeline_conf["start_zoom_adjust"] = scope.startZoom_Adjust;
+      if (scope.startAtSlide) timeline_conf["start_at_slide"] = scope.startAtSlide;
 
       // working, but how to integrate with Angular routing?! Something to ponder
-      (scope.hash_bookmark==='true') ? timeline_conf["hash_bookmark"] = true :
+      (scope.hashBookmark==='true') ? timeline_conf["hash_bookmark"] = true :
                                        timeline_conf["hash_bookmark"] = false;
 
       if (scope.font) timeline_conf["font"] = scope.font;
@@ -64,6 +66,7 @@ angular.module('pippTimelineDirectives', [])
 
       // Instantiate timeline object and manipulate DOM
       var timeline = new VMM.Timeline('pipp-timeline',width,height);
+      console.log("timeline_conf: ", timeline_conf);
       timeline.init(timeline_conf);
 
     }
