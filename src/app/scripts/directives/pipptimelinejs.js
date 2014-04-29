@@ -1,9 +1,9 @@
 'use strict';
 
 /**
- * Basic directive wrapping TimelineJS. At the moment, it only binds source
- * data into it's own isolate scope. Will soon take all configuration available
- * to TimelineJS in addition.
+ * Basic directive wrapping TimelineJS. At the moment, it supports JSON sources
+ * and can take most of the TimelineJS configuration. See README.md for usage
+ * instructions.
  */
 angular.module('pippTimelineDirectives', [])
 .directive('pippTimelineJS', function ($rootScope) {
