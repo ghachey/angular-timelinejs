@@ -63,6 +63,8 @@ angular.module('pippTimelineDirectives', [])
 
       (scope.debug==='true') ? VMM.debug = true : VMM.debug = false;
 
+
+      console.log("TESTING: ", timeline_conf);
       // Instantiate timeline object and manipulate DOM
       var timeline = new VMM.Timeline('pipp-timeline', width, height);
       timeline.init(timeline_conf);
@@ -71,7 +73,13 @@ angular.module('pippTimelineDirectives', [])
         if (!newSource) {
           return;
         }
-        timeline.reload(newSource); // when model mutates
+        // when model mutates. Either user choses to dynamically reset the current_slide
+        // through the startAtSlide binding or not and uses the default behavior
+        if (scope.startAtSlide) {
+          timeline.reload(newSource, scope.startAtSlide);
+        } else {
+          timeline.reload(newSource);
+        }
       });
 
     }
