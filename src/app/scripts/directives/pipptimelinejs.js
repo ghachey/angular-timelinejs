@@ -51,7 +51,7 @@ angular.module('pippTimelineDirectives', [])
       if (scope.embed) timeline_conf["embed"] = scope.embed;
 
       if (scope.startAtEnd==='true') timeline_conf["start_at_end"] = true;
-      if (scope.startZoomAdjust) timeline_conf["start_zoom_adjust"] = scope.startZoom_Adjust;
+      if (scope.startZoomAdjust) timeline_conf["start_zoom_adjust"] = scope.startZoomAdjust;
       if (scope.startAtSlide) timeline_conf["start_at_slide"] = scope.startAtSlide;
 
       // working, but how to integrate with Angular routing?! Something to ponder
@@ -59,9 +59,12 @@ angular.module('pippTimelineDirectives', [])
                                        timeline_conf["hash_bookmark"] = false;
 
       if (scope.font) timeline_conf["font"] = scope.font;
+      if (scope.thumbnail_url) timeline_conf["thumbnail_url"] = scope.thumbnail_url;
 
       (scope.debug==='true') ? VMM.debug = true : VMM.debug = false;
 
+
+      console.log("TESTING: ", timeline_conf);
       // Instantiate timeline object and manipulate DOM
       var timeline = new VMM.Timeline('pipp-timeline', width, height);
       timeline.init(timeline_conf);

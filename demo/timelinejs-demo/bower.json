@@ -3,7 +3,11 @@
   "private": true,
   "dependencies": {
     "bootstrap": "~3.0.3",
-    "jquery": "~1.11.0"
+    "jquery": "~1.11.0",
+    "TimelineJS": "git@github.com:gcrumb/TimelineJS.git#master"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "resolutions": {
+    "TimelineJS": "~2.30.1"
+  }
 }

@@ -19,7 +19,7 @@
   ],
   "dependencies": {
     "angular": "~1.2.16",
-    "TimelineJS": "~2.30.1",
+    "TimelineJS": "git@github.com:ghachey/TimelineJS.git#master",
     "jquery": "~2.1.0"
   },
   "devDependencies": {
