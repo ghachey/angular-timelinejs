@@ -51,7 +51,7 @@ angular.module('pippTimelineDirectives', [])
       if (scope.embed) timeline_conf["embed"] = scope.embed;
 
       if (scope.startAtEnd==='true') timeline_conf["start_at_end"] = true;
-      if (scope.startZoomAdjust) timeline_conf["start_zoom_adjust"] = scope.startZoom_Adjust;
+      if (scope.startZoomAdjust) timeline_conf["start_zoom_adjust"] = scope.startZoomAdjust;
       if (scope.startAtSlide) timeline_conf["start_at_slide"] = scope.startAtSlide;
 
       // working, but how to integrate with Angular routing?! Something to ponder
