@@ -9,8 +9,6 @@ angular.module('angularTimelinejsDemoApp')
     'Karma'
   ];
 
-  $scope.data = null;
-
   var data1 = {
     "timeline":
     {
@@ -257,6 +255,10 @@ angular.module('angularTimelinejsDemoApp')
     }
   };
 
+//  $scope.data = data1;
+  $scope.data = null;
+  $scope.index = 0; // slide index
+
   var choice = data1;
   var updateModel = function() {
     if (choice==data1) {
@@ -269,7 +271,7 @@ angular.module('angularTimelinejsDemoApp')
     console.log("data: ", $scope.data);
   };
 
-  var stopUpdating = $interval(updateModel, 5000);
+  var stopUpdating = $interval(updateModel, 10000);
 
   $scope.$on('$destroy', function() {
     // Make sure that the interval is destroyed too

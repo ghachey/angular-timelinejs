@@ -181,7 +181,7 @@ describe('Directive: pippTimelineJS', function () {
   }));
 
   it('should contain an isolate scope with timeline data', function () {
-    expect(elt.isolateScope().timelineData).not.toBe(null);
+    expect(elt.isolateScope().source).not.toBe(null);
   });
 
   // Primitive checks for the TimelineJS modified DOM
