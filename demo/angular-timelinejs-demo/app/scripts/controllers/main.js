@@ -255,27 +255,27 @@ angular.module('angularTimelinejsDemoApp')
     }
   };
 
-//  $scope.data = data1;
-  $scope.data = null;
-  $scope.index = 0; // slide index
+  $scope.data = data1;
+//   $scope.data = null;
+//   $scope.index = 0; // slide index
 
-  var choice = data1;
-  var updateModel = function() {
-    if (choice==data1) {
-      $scope.data = data2;
-      choice = data2;
-    } else {
-      $scope.data = data1;
-      choice = data1;
-    }
-    console.log("data: ", $scope.data);
-  };
+//   var choice = data1;
+//   var updateModel = function() {
+//     if (choice==data1) {
+//       $scope.data = data2;
+//       choice = data2;
+//     } else {
+//       $scope.data = data1;
+//       choice = data1;
+//     }
+//     console.log("data: ", $scope.data);
+//   };
 
-  var stopUpdating = $interval(updateModel, 10000);
+//   var stopUpdating = $interval(updateModel, 10000);
 
-  $scope.$on('$destroy', function() {
-    // Make sure that the interval is destroyed too
-    $interval.cancel(stopUpdating);
-  });
+//   $scope.$on('$destroy', function() {
+//     // Make sure that the interval is destroyed too
+//     $interval.cancel(stopUpdating);
+//   });
 
 });

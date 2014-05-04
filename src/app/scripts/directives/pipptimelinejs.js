@@ -31,6 +31,7 @@ angular.module('pippTimelineDirectives', [])
       //////////////////////
       // Required config  //
       //////////////////////
+
       var width = (scope.width === undefined) ? '960' : scope.width;
       var height = (scope.height === undefined) ? '540' : scope.height;
       var timeline_conf = {
