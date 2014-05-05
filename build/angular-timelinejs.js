@@ -60,7 +60,12 @@ angular.module('pippTimelineDirectives', [])
         timeline_conf["start_at_end"] = false;
 
       if (scope.startZoomAdjust) timeline_conf["start_zoom_adjust"] = scope.startZoomAdjust;
-      if (scope.startAtSlide) timeline_conf["start_at_slide"] = scope.startAtSlide;
+
+      if (scope.startAtSlide) {
+        // Keep an eye on this bit of code...
+        timeline_conf["start_at_slide"] = scope.startAtSlide;
+        scope.slideIndex = scope.startAtSlide;
+      }
 
       // working, but how to integrate with Angular routing?! Something to ponder
       (scope.hashBookmark==='true') ? timeline_conf["hash_bookmark"] = true :
@@ -116,6 +121,33 @@ angular.module('pippTimelineDirectives', [])
 
       // Non-async cases (when source data is already on scope)
       render(scope.source);
+
+      /////////////////////////
+      // Events of Interest  //
+      /////////////////////////
+
+      console.log("===========================");
+      console.log("Listening to Events");
+      console.log("===========================");
+
+//       console.log("iElement: ", iElement);
+//       var navNext = iElement.find('.nav-next');
+//       console.log(".nav-next: ", navNext);
+//       var navPrevious = iElement.find('.nav-previous');
+//       console.log(".nav-previous: ", navPrevious);
+
+      iElement.on("click", iElement.find('.nav-next'), function(e) {
+        console.log(".nav-next clicked: ", e);
+        scope.slideIndex = ++scope.slideIndex;
+      });
+
+      iElement.on("click", iElement.find('.nav-previous'), function(e) {
+        console.log(".nav-previous clicked: ", e);
+        scope.slideIndex = --scope.slideIndex;
+      });
+
+
+      // May need to listen to $destroy event to avoid memory leak.
 
       // VMM.Slider getCurrentNumber, setSlide,
       // gotoFirst, gotoLast, onNextClick, onPrevClick, goBackTen, goForwardTen

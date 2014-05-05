@@ -146,6 +146,9 @@ angular.module('pippTimelineDirectives', [])
         scope.slideIndex = --scope.slideIndex;
       });
 
+
+      // May need to listen to $destroy event to avoid memory leak.
+
       // VMM.Slider getCurrentNumber, setSlide,
       // gotoFirst, gotoLast, onNextClick, onPrevClick, goBackTen, goForwardTen
       // Or maybe just hook to upDate()?
