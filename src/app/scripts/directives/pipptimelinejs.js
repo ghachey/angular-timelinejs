@@ -2,7 +2,9 @@
 
 /**
  * Basic directive wrapping TimelineJS. At the moment, it supports JSON sources
- * and can take most of the TimelineJS configuration. See README.md for usage
+ * and can take most of the TimelineJS configuration. It can also provide a two-way
+ * binding state to track the current slide in the controller. This can be useful
+ * in operations such as CRUD on slides. See README.md for usage more
  * instructions.
  */
 angular.module('pippTimelineDirectives', [])
