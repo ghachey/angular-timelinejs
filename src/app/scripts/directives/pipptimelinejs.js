@@ -21,7 +21,7 @@ angular.module('pippTimelineDirectives', [])
       font: '@',
       lang: '@',
       thumbnailUrl: '@',
-      slideIndex: '@',
+      slide: '=',
       debug: '@'
     },
     link: function postLink(scope, iElement, iAttrs) {
@@ -61,11 +61,12 @@ angular.module('pippTimelineDirectives', [])
 
       if (scope.startZoomAdjust) timeline_conf["start_zoom_adjust"] = scope.startZoomAdjust;
 
-      if (scope.startAtSlide) {
-        // Keep an eye on this bit of code...
-        timeline_conf["start_at_slide"] = scope.startAtSlide;
-        scope.slideIndex = scope.startAtSlide;
-      }
+      // Still need to observe how slide and startAtSlide with behave together
+      // in practice. For now, put the burden on the programmer to use both correctly
+      // startAtSlide should only be used to instantiate and slide
+      // should only be used to reload.
+
+      if (scope.startAtSlide) timeline_conf["start_at_slide"] = scope.startAtSlide;
 
       // working, but how to integrate with Angular routing?! Something to ponder
       (scope.hashBookmark==='true') ? timeline_conf["hash_bookmark"] = true :
@@ -95,11 +96,12 @@ angular.module('pippTimelineDirectives', [])
           console.log("========================");
           console.log("Reloading Timeline");
           console.log("========================");
-          // I think it may be much easier to force a slideIndex on reload
-          // default to 0 for now.
-          if (scope.slideIndex) {
-            timeline.reload(s, scope.slideIndex);
-          } else {
+          // I think it may be much easier to force a slide on reload
+          // Essentially, now the required directive config would contain to bindings
+          // <pipp-timeline-j-s source="data" slide="index"></pipp-timeline-j-s>
+          if (scope.slide) {
+            timeline.reload(s, scope.slide);
+          } else { // this else is effectively DEPRECATED.
             timeline.reload(s);
           }
         }
@@ -130,22 +132,17 @@ angular.module('pippTimelineDirectives', [])
       console.log("Listening to Events");
       console.log("===========================");
 
-//       console.log("iElement: ", iElement);
-//       var navNext = iElement.find('.nav-next');
-//       console.log(".nav-next: ", navNext);
-//       var navPrevious = iElement.find('.nav-previous');
-//       console.log(".nav-previous: ", navPrevious);
-
-      iElement.on("click", iElement.find('.nav-next'), function(e) {
+      iElement.on("click", ".nav-next", function(e) {
         console.log(".nav-next clicked: ", e);
-        scope.slideIndex = ++scope.slideIndex;
+        scope.slide = ++scope.slide;
+        console.log("Index: ", scope.slide);
       });
 
-      iElement.on("click", iElement.find('.nav-previous'), function(e) {
+      iElement.on("click", ".nav-previous", function(e) {
         console.log(".nav-previous clicked: ", e);
-        scope.slideIndex = --scope.slideIndex;
+        scope.slide = --scope.slide;
+        console.log("Index: ", scope.slide);
       });
-
 
       // May need to listen to $destroy event to avoid memory leak.
 

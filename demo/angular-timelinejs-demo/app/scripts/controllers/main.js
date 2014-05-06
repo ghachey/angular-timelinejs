@@ -256,6 +256,14 @@ angular.module('angularTimelinejsDemoApp')
   };
 
   $scope.data = data1;
+  $scope.index = 0;
+
+  function show () {
+    console.log("Index from controller: ", $scope.index);
+  }
+
+  $interval(show, 5000);
+
 //   $scope.data = null;
 //   $scope.index = 0; // slide index
 
