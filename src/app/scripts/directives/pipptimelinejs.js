@@ -21,7 +21,7 @@ angular.module('pippTimelineDirectives', [])
       font: '@',
       lang: '@',
       thumbnailUrl: '@',
-      slide: '=',
+      timeline: '=',
       debug: '@'
     },
     link: function postLink(scope, iElement, iAttrs) {
@@ -99,8 +99,8 @@ angular.module('pippTimelineDirectives', [])
           // I think it may be much easier to force a slide on reload
           // Essentially, now the required directive config would contain to bindings
           // <pipp-timeline-j-s source="data" slide="index"></pipp-timeline-j-s>
-          if (scope.slide) {
-            timeline.reload(s, scope.slide);
+          if (scope.timeline.index) {
+            timeline.reload(s, scope.timeline.index);
           } else { // this else is effectively DEPRECATED.
             timeline.reload(s);
           }
@@ -134,14 +134,14 @@ angular.module('pippTimelineDirectives', [])
 
       iElement.on("click", ".nav-next", function(e) {
         console.log(".nav-next clicked: ", e);
-        scope.slide = ++scope.slide;
-        console.log("Index: ", scope.slide);
+        scope.timeline.index = ++scope.timeline.index;
+        console.log("Index: ", scope.timeline.index);
       });
 
       iElement.on("click", ".nav-previous", function(e) {
         console.log(".nav-previous clicked: ", e);
-        scope.slide = --scope.slide;
-        console.log("Index: ", scope.slide);
+        scope.timeline.index = --scope.timeline.index;
+        console.log("Index: ", scope.timeline.index);
       });
 
       // May need to listen to $destroy event to avoid memory leak.

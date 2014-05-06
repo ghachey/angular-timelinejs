@@ -255,18 +255,30 @@ angular.module('angularTimelinejsDemoApp')
     }
   };
 
-  $scope.data = data1;
-  $scope.index = 0;
+  $scope.timelineValues = {index: 0};
 
+  /**
+   * Simple function to show timelineValues.index has dual binding with timeline
+   * directive state tracking
+   */
   function show () {
-    console.log("Index from controller: ", $scope.index);
+    console.log("Index from controller: ", $scope.timelineValues.index);
   }
 
-  $interval(show, 5000);
+  var stopShowing = $interval(show, 5000);
 
+  $scope.$on('$destroy', function() {
+    // Make sure that the interval is destroyed too
+    $interval.cancel(stopShowing);
+  });
+
+  // Static model source data
+  $scope.data = data1;
+
+  // ---------- or -------------- //
+
+  // Dynamic source data
 //   $scope.data = null;
-//   $scope.index = 0; // slide index
-
 //   var choice = data1;
 //   var updateModel = function() {
 //     if (choice==data1) {
