@@ -2,7 +2,9 @@
 
 /**
  * Basic directive wrapping TimelineJS. At the moment, it supports JSON sources
- * and can take most of the TimelineJS configuration. See README.md for usage
+ * and can take most of the TimelineJS configuration. It can also provide a two-way
+ * binding state to track the current slide in the controller. This can be useful
+ * in operations such as CRUD on slides. See README.md for usage more
  * instructions.
  */
 angular.module('pippTimelineDirectives', [])
@@ -21,7 +23,7 @@ angular.module('pippTimelineDirectives', [])
       font: '@',
       lang: '@',
       thumbnailUrl: '@',
-      slideIndex: '@',
+      state: '=',
       debug: '@'
     },
     link: function postLink(scope, iElement, iAttrs) {
@@ -61,11 +63,12 @@ angular.module('pippTimelineDirectives', [])
 
       if (scope.startZoomAdjust) timeline_conf["start_zoom_adjust"] = scope.startZoomAdjust;
 
-      if (scope.startAtSlide) {
-        // Keep an eye on this bit of code...
-        timeline_conf["start_at_slide"] = scope.startAtSlide;
-        scope.slideIndex = scope.startAtSlide;
-      }
+      // Still need to observe how slide and startAtSlide with behave together
+      // in practice. For now, put the burden on the programmer to use both correctly
+      // startAtSlide should only be used to instantiate and slide
+      // should only be used to reload.
+
+      if (scope.startAtSlide) timeline_conf["start_at_slide"] = scope.startAtSlide;
 
       // working, but how to integrate with Angular routing?! Something to ponder
       (scope.hashBookmark==='true') ? timeline_conf["hash_bookmark"] = true :
@@ -95,11 +98,12 @@ angular.module('pippTimelineDirectives', [])
           console.log("========================");
           console.log("Reloading Timeline");
           console.log("========================");
-          // I think it may be much easier to force a slideIndex on reload
-          // default to 0 for now.
-          if (scope.slideIndex) {
-            timeline.reload(s, scope.slideIndex);
-          } else {
+          // I think it may be much easier to force a slide on reload
+          // Essentially, now the required directive config would contain to bindings
+          // <pipp-timeline-j-s source="data" slide="index"></pipp-timeline-j-s>
+          if (scope.state.index) {
+            timeline.reload(s, scope.state.index);
+          } else { // this else is effectively DEPRECATED.
             timeline.reload(s);
           }
         }
@@ -130,28 +134,23 @@ angular.module('pippTimelineDirectives', [])
       console.log("Listening to Events");
       console.log("===========================");
 
-//       console.log("iElement: ", iElement);
-//       var navNext = iElement.find('.nav-next');
-//       console.log(".nav-next: ", navNext);
-//       var navPrevious = iElement.find('.nav-previous');
-//       console.log(".nav-previous: ", navPrevious);
+      var updateState = function(e) {
+        console.log("Click event: ", e);
+        scope.state.index = timeline.get_config().current_slide;
+        console.log("Index: ", scope.state.index);
+      };
 
-      iElement.on("click", iElement.find('.nav-next'), function(e) {
-        console.log(".nav-next clicked: ", e);
-        scope.slideIndex = ++scope.slideIndex;
+      iElement.on("click", ".nav-next", function(e) {
+        updateState(e);
       });
 
-      iElement.on("click", iElement.find('.nav-previous'), function(e) {
-        console.log(".nav-previous clicked: ", e);
-        scope.slideIndex = --scope.slideIndex;
+      iElement.on("click", ".nav-previous", function(e) {
+        updateState(e);
       });
 
-
-      // May need to listen to $destroy event to avoid memory leak.
-
-      // VMM.Slider getCurrentNumber, setSlide,
-      // gotoFirst, gotoLast, onNextClick, onPrevClick, goBackTen, goForwardTen
-      // Or maybe just hook to upDate()?
+      iElement.on("click", ".marker", function(e) {
+        updateState(e);
+      });
 
     }
   };
