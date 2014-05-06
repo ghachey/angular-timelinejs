@@ -21,7 +21,7 @@ angular.module('pippTimelineDirectives', [])
       font: '@',
       lang: '@',
       thumbnailUrl: '@',
-      timeline: '=',
+      state: '=',
       debug: '@'
     },
     link: function postLink(scope, iElement, iAttrs) {
@@ -99,8 +99,8 @@ angular.module('pippTimelineDirectives', [])
           // I think it may be much easier to force a slide on reload
           // Essentially, now the required directive config would contain to bindings
           // <pipp-timeline-j-s source="data" slide="index"></pipp-timeline-j-s>
-          if (scope.timeline.index) {
-            timeline.reload(s, scope.timeline.index);
+          if (scope.state.index) {
+            timeline.reload(s, scope.state.index);
           } else { // this else is effectively DEPRECATED.
             timeline.reload(s);
           }
@@ -132,23 +132,23 @@ angular.module('pippTimelineDirectives', [])
       console.log("Listening to Events");
       console.log("===========================");
 
+      var updateState = function(e) {
+        console.log("Click event: ", e);
+        scope.state.index = timeline.get_config().current_slide;
+        console.log("Index: ", scope.state.index);
+      };
+
       iElement.on("click", ".nav-next", function(e) {
-        console.log(".nav-next clicked: ", e);
-        scope.timeline.index = ++scope.timeline.index;
-        console.log("Index: ", scope.timeline.index);
+        updateState(e);
       });
 
       iElement.on("click", ".nav-previous", function(e) {
-        console.log(".nav-previous clicked: ", e);
-        scope.timeline.index = --scope.timeline.index;
-        console.log("Index: ", scope.timeline.index);
+        updateState(e);
       });
 
-      // May need to listen to $destroy event to avoid memory leak.
-
-      // VMM.Slider getCurrentNumber, setSlide,
-      // gotoFirst, gotoLast, onNextClick, onPrevClick, goBackTen, goForwardTen
-      // Or maybe just hook to upDate()?
+      iElement.on("click", ".marker", function(e) {
+        updateState(e);
+      });
 
     }
   };
