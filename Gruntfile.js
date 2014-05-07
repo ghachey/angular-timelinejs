@@ -34,7 +34,7 @@ module.exports = function(grunt) {
     watch: {
       gruntfile: {
         files: 'src/app/scripts/directives/pipptimelinejs.js',
-        tasks: ['copy:pipptimeline'],
+        tasks: ['uglify', 'copy:main', 'copy:pipptimeline'],
       }
     },
 

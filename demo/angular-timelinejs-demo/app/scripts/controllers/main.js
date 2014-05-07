@@ -257,21 +257,6 @@ angular.module('angularTimelinejsDemoApp')
 
   $scope.timelineValues = {index: 0};
 
-  /**
-   * Simple function to show timelineValues.index has dual binding with timeline
-   * directive state tracking
-   */
-  function show () {
-    console.log("Index from controller: ", $scope.timelineValues.index);
-  }
-
-  var stopShowing = $interval(show, 5000);
-
-  $scope.$on('$destroy', function() {
-    // Make sure that the interval is destroyed too
-    $interval.cancel(stopShowing);
-  });
-
   // Static model source data
   $scope.data = data1;
 
@@ -297,5 +282,36 @@ angular.module('angularTimelinejsDemoApp')
 //     // Make sure that the interval is destroyed too
 //     $interval.cancel(stopUpdating);
 //   });
+
+  /**
+   * Simple function to show timelineValues.index has dual binding with timeline
+   * directive state tracking
+   */
+  function show () {
+    console.log("Index from controller: ", $scope.timelineValues.index);
+  }
+
+  var stopShowing = $interval(show, 5000);
+
+  $scope.$on('$destroy', function() {
+    // Make sure that the interval is destroyed too
+    $interval.cancel(stopShowing);
+  });
+
+  /**
+   * Simple function to force a slide change from the controller
+   */
+  function changeSlide () {
+    var random = Math.floor(Math.random() * ($scope.data.timeline['date'].length)) + 1;
+    console.log("Changing slide: ", random);
+    $scope.timelineValues['index'] = random;
+  }
+
+  var stopChanging = $interval(changeSlide, 10000);
+
+  $scope.$on('$destroy', function() {
+    // Make sure that the interval is destroyed too
+    $interval.cancel(stopChanging);
+  });
 
 });

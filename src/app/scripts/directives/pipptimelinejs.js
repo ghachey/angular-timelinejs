@@ -87,23 +87,20 @@ angular.module('pippTimelineDirectives', [])
       var render = function (s) {
         // Source arrived but not yet init'ed VMM.Timelines
         if (s && !timeline) {
-          console.log("========================");
           console.log("Initializing Timeline");
-          console.log("========================");
           timeline_conf["source"] = s;
           timeline = new VMM.Timeline('pipp-timeline', width, height);
           timeline.init(timeline_conf);
           console.log("VMM.Timeline object: ", timeline);
         } else if (s && timeline) { // VMM.Timeline init'ed; ready to only reload
-          console.log("========================");
           console.log("Reloading Timeline");
-          console.log("========================");
           // I think it may be much easier to force a slide on reload
           // Essentially, now the required directive config would contain to bindings
           // <pipp-timeline-j-s source="data" slide="index"></pipp-timeline-j-s>
+          // this if/else is effectively DEPRECATED and will eventually be removed
           if (scope.state.index) {
             timeline.reload(s, scope.state.index);
-          } else { // this else is effectively DEPRECATED.
+          } else {
             timeline.reload(s);
           }
         }
@@ -113,26 +110,30 @@ angular.module('pippTimelineDirectives', [])
       scope.$watch('source', function (newSource, oldSource) {
         // Source not ready (maybe waiting on service or other async call)
         if (!newSource) {
-          console.log("========================");
           console.log("Waiting for source data");
-          console.log("========================");
           return;
         }
-
         render(newSource);
-
       });
 
       // Non-async cases (when source data is already on scope)
       render(scope.source);
 
+      // When changing the current slide *from the controller* without changing the
+      // source data.
+      scope.$watch('state.index', function (newState, oldState) {
+        console.log("Detected state change");
+        if (!newState) {
+          return;
+        }
+        render(scope.source);
+      });
+
       /////////////////////////
       // Events of Interest  //
       /////////////////////////
 
-      console.log("===========================");
       console.log("Listening to Events");
-      console.log("===========================");
 
       var updateState = function(e) {
         console.log("Click event: ", e);
