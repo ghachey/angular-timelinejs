@@ -123,7 +123,7 @@ angular.module('pippTimelineDirectives', [])
       // source data.
       scope.$watch('state.index', function (newState, oldState) {
         console.log("Detected state change");
-        if (!newState) {
+        if (!newState == 'undefined') {
           return;
         }
         render(scope.source);
