@@ -8,7 +8,7 @@
  * instructions.
  */
 angular.module('pippTimelineDirectives', [])
-.directive('pippTimelineJS', function ($rootScope) {
+.directive('pippTimelineJS', function ($rootScope, $timeout) {
   return {
     template: '<div id="pipp-timeline"></div>',
     restrict: 'E',
@@ -135,10 +135,19 @@ angular.module('pippTimelineDirectives', [])
 
       console.log("Listening to Events");
 
-      var updateState = function(e) {
-        console.log("Click event: ", e);
-        scope.state.index = timeline.get_config().current_slide;
-        console.log("Index: ", scope.state.index);
+      var updateState = function(e, callback) {
+        console.log("Timeline navigation event: ", e);
+        // For some reason I have not investigated when using
+        // 'keydown' events the current_slide is not yet
+        // updated in the TimelineJS config. This is why
+        // I delay the scope.state.index binding through
+        // a simple $timeout callback with 0 delay.
+        // Funny enough this does not manifest itself
+        // with 'click' events.
+        return $timeout(function(){
+          scope.state.index = timeline.get_config().current_slide;
+          console.log("Index updated: ", scope.state.index);
+        });
       };
 
       iElement.on("click", ".nav-next", function(e) {
@@ -151,6 +160,23 @@ angular.module('pippTimelineDirectives', [])
 
       iElement.on("click", ".marker", function(e) {
         updateState(e);
+      });
+
+      var bodyElement = angular.element(document.body);
+      bodyElement.on("keydown", function(e) {
+        // On what keys to update current slide state
+        // Might be missing some, touch keys?!?
+        // Using object mapping for clarity
+        var keys = {33 : "PgUp",
+                    34 : "PgDn",
+                    37 : "Left",
+                    39 : "Right",
+                    36 : "Home",
+                    35 : "End"};
+        var keysProps = Object.getOwnPropertyNames(keys);
+        if (keysProps.indexOf(e.keyCode+'') != -1) {
+          updateState(e);
+        }
       });
 
     }
