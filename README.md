@@ -29,7 +29,6 @@ then simply include the following somewhere into your HTML (i.e. view).
                    start-at-slide="0"
                    hash-bookmark="false"
                    lang="en"
-                   thumbnail-url="http://vila.pacificpolicy.org:3030/"
                    debug="false"></pipp-timeline-j-s>
 ```
 
