@@ -21,13 +21,22 @@ angular.module('myModule', ['pippTimelineJS']);
 then simply include the following somewhere into your HTML (i.e. view).
 
 ```html
-<pipp-timeline-j-s source-data="data"></pipp-timeline-j-s>
+<pipp-timeline-j-s source="timelineData"
+                   height="600"
+                   width="98%"
+                   start-zoom-adjust="0"
+                   start-at-end="false"
+                   start-at-slide="0"
+                   hash-bookmark="false"
+                   lang="en"
+                   thumbnail-url="http://vila.pacificpolicy.org:3030/"
+                   debug="false"></pipp-timeline-j-s>
 ```
 
-and in a controller you would have your data which you can pulled from services and manipulate as you wish.
+and in a controller you would have your data which you can pull from services and manipulate as you wish.
 
 ```javascript
-$scope.data = {
+$scope.timelineData = {
   "timeline":
   {
     "headline":"The Main Timeline Headline Goes here",
@@ -94,7 +103,7 @@ General Notes
 
 * Namespacing - the pipp prefix on directive names is the namespace portion as this was initially developed within a project at the Pacific Insitute of Public Policy (PiPP).
 * Versioning - should follow the Semantic Versioning formal specifications as described in http://semver.org/.
-* Committing Dependencies
+* Committing Dependencies - dependencies are not committed but only declared in package.json and bower.json.
 
 Support
 -------
@@ -109,7 +118,7 @@ Contributing to this project is welcome. The process to do so is outlined below:
 1. Create a fork of the project
 2. Work on whatever bug or feature you wish
 3. Include at least basic tests for your work
-4. Ensure all tests still passes
+4. Ensure all tests still pass
 5. Add a example usage in the demo
 6. Create a pull request (PR)
 

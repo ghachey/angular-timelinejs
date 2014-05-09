@@ -87,7 +87,7 @@ angular.module('pippTimelineDirectives', [])
       scope.$watch('state.modal_open', function (newVal) {
         // When timeline is loaded check if a CRUD modal is open for editing
         if (timeline) {
-          console.log("Modal open forediting: ", newVal);
+          console.log("Modal open for editing: ", newVal);
           timeline.set_config_item("modal_open", newVal);
         }
       });
@@ -99,13 +99,13 @@ angular.module('pippTimelineDirectives', [])
       var render = function (s) {
         // Source arrived but not yet init'ed VMM.Timelines
         if (s && !timeline) {
-          console.log("Initializing Timeline");
+          console.log("Initializing timeline with: ", timeline_conf);
           timeline_conf["source"] = s;
           timeline = new VMM.Timeline('pipp-timeline', width, height);
           timeline.init(timeline_conf);
           console.log("VMM.Timeline object: ", timeline);
         } else if (s && timeline) { // VMM.Timeline init'ed; ready to only reload
-          console.log("Reloading Timeline");
+          console.log("Reloading timeline");
           // I think it may be much easier to force a slide on reload
           // Essentially, now the required directive config would contain to bindings
           // <pipp-timeline-j-s source="data" slide="index"></pipp-timeline-j-s>
