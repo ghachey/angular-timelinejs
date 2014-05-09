@@ -80,6 +80,18 @@ angular.module('pippTimelineDirectives', [])
       (scope.debug==='true') ? VMM.debug = true : VMM.debug = false;
       console.log("Timeline Configuration: ", timeline_conf);
 
+      /////////////////////////////
+      // Custom Timeline Config  //
+      /////////////////////////////
+
+      scope.$watch('state.modal_open', function (newVal) {
+        // When timeline is loaded check if a CRUD modal is open for editing
+        if (timeline) {
+          console.log("Modal open forediting: ", newVal);
+          timeline.set_config_item("modal_open", newVal);
+        }
+      });
+
       /////////////////////////
       // Rendering Timeline  //
       /////////////////////////
@@ -133,7 +145,7 @@ angular.module('pippTimelineDirectives', [])
       // Events of Interest  //
       /////////////////////////
 
-      console.log("Listening to Events");
+      console.log("Listening to events");
 
       var updateState = function(e, callback) {
         console.log("Timeline navigation event: ", e);
