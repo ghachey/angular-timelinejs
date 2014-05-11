@@ -138,7 +138,9 @@ angular.module('pippTimelineDirectives', [])
         if (!newState == 'undefined') {
           return;
         }
-        render(scope.source);
+        if (timeline) {
+          timeline.get_config().current_slide = newState;
+        }
       });
 
       /////////////////////////
