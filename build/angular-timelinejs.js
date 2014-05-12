@@ -24,6 +24,7 @@ angular.module('pippTimelineDirectives', [])
       lang: '@',
       thumbnailUrl: '@',
       state: '=',
+      tagClicked: '=', // Specific to PiPP
       debug: '@'
     },
     link: function postLink(scope, iElement, iAttrs) {
@@ -125,6 +126,7 @@ angular.module('pippTimelineDirectives', [])
           console.log("Waiting for source data");
           return;
         }
+        newSource = format(newSource, formatStory);
         render(newSource);
       });
 
@@ -176,6 +178,12 @@ angular.module('pippTimelineDirectives', [])
         updateState(e);
       });
 
+      iElement.on("click", ".tag", function(e) {
+        scope.$apply(function(){
+          scope.tagClicked(e.currentTarget.innerText);
+        });
+      });
+
       var bodyElement = angular.element(document.body);
       bodyElement.on("keydown", function(e) {
         // On what keys to update current slide state
@@ -192,6 +200,88 @@ angular.module('pippTimelineDirectives', [])
           updateState(e);
         }
       });
+
+      //////////////////////////////////////////////
+      // Private funtionalities specific to PiPP  //
+      //////////////////////////////////////////////
+
+      // TODO
+      // I'd like to make below more general by pushing
+      // the specific formatStory function to the controller
+      // with bindings here. This could then be used
+      // to format in any way shape or form the stories
+      // by passing somehow the function to the map
+      // format function below
+
+      /**
+       * @description
+       *
+       * A custom function whose purpose it is to format
+       * stories with special tags containing Angular's ngClick
+       * directives in the HTML making the tags clickable.
+       *
+       * At PiPP each story is tagged. We need to ability to add
+       * a funtionality when clicking those tags. To achieve this
+       * at the moment we format_tags every time a timelineData
+       * mutation occurs. We then need a callback addTag to the
+       * controller for this directive with logic to be executed
+       * when tags are clicked.
+       *
+       * @param {string} story a string containing both the tags and the
+       *    body content of the story. For example:
+       *    "tag1,tag2,tag3|ENDTAGS|<p>Some news worthy story</p>"
+       * @return {string} the same story with formatted tags. For
+       *    example:
+       *    "<ul class="tag_collection">
+       *       <li class="tag" ng-click="addTag('tag1')">tag1</li>
+       *       <li class="tag" ng-click="addTag('tag2')">tag2</li>
+       *       <li class="tag" ng-click="addTag('tag3')">tag3</li>
+       *     </ul><p>Some news worthy story</p>"
+       */
+      var formatStory = function(story) {
+        var tagsAndStory = story.text.split('|ENDTAGS|');
+        var formattedTags = '';
+
+        if (tagsAndStory[0] != '') {
+          var tags = tagsAndStory[0].split(',');
+          var prefix = '<ul class="tag_collection">';
+          var tagsList = '';
+          var suffix = '</ul>';
+
+          tags.forEach(function(this_tag){
+            if (this_tag !== 'confirm' && this_tag !== 'surprise' && this_tag !== 'challenge'){
+              tagsList = tagsList + '<li class="tag" ng-click="addTag(\'' + this_tag + '\')">' + this_tag + '</li>';
+            }
+          });
+
+          formattedTags = prefix + tagsList + suffix;
+        }
+
+        story.text = formattedTags + tagsAndStory[1];
+        return story;
+      };
+
+      /**
+       * @description
+       *
+       * Private function to format stories before the whole timeline
+       * source is passed to the TimelineJS library. Should only be called once when
+       * source data changes otherwise tags are formatted more than once
+       * and just accumulate "formatting junk".
+       *
+       * @param {Object} source The timeline source, typically binded to
+       *    the isolate scope's source model.
+       * @param {Function} fn A custom function to be used to format stories.
+       *    This function can be declared by the user in the controller and
+       *    will be binded here through the isolate scope's formatFunction.
+       * @return {Object} the source with the stories formatted.
+       */
+      var format = function(source, fn) {
+        var stories = source.timeline.date;
+        source.timeline.date = stories.map(fn);
+        console.log("Source with formatted tags: ", source);
+        return source;
+      };
 
     }
   };
