@@ -12,10 +12,19 @@ To use the angular-timelinejs directive you can simply install it using Bower:
 $ bower install angular-timelinejs
 ```
 
+Load the Javascript and CSS files in appropriate places:
+
+```html
+<link rel="stylesheet" href="bower_components/TimelineJS/build/css/timeline.css" />
+<link rel="stylesheet" href="bower_components/TimelineJS/build/css/themes/font/Rancho-Gudea.css">
+<script src="bower_components/TimelineJS/build/js/timeline.js"></script>
+<script src="bower_components/angular-timelinejs/build/angular-timelinejs.js"></script>
+```
+
 and make sure you inject it in your application (i.e. app.js):
 
 ```javascript
-angular.module('myModule', ['pippTimelineJS']);
+angular.module('myModule', ['pippTimelineDirectives']);
 ```
 
 then simply include the following somewhere into your HTML (i.e. view).
