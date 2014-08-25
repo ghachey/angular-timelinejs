@@ -136,12 +136,10 @@ angular.module('pippTimelineDirectives', [])
       // When changing the current slide *from the controller* without changing the
       // source data.
       scope.$watch('state.index', function (newState, oldState) {
-        console.log("Detected state change");
-        if (!newState == 'undefined') {
-          return;
-        }
+        console.log("Detected state change: ", newState);
         if (timeline) {
-          timeline.get_config().current_slide = newState;
+          timeline.set_slide(newState);
+          
         }
       });
 
