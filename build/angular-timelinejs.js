@@ -1,11 +1,23 @@
 'use strict';
 
 /**
- * Basic directive wrapping TimelineJS. At the moment, it supports JSON sources
- * and can take most of the TimelineJS configuration. It can also provide a two-way
- * binding state to track the current slide in the controller. This can be useful
- * in operations such as CRUD on slides. See README.md for usage more
- * instructions.
+ * @ngdoc directive
+ * @name pippTimelineDirectives.directive:pippTimelineJS
+ * @description
+ * # taglist
+ *
+ * Basic directive wrapping TimelineJS. At the moment, it supports
+ * JSON sources and can take most of the TimelineJS configuration. It
+ * can also provide a two-way binding state to track the current slide
+ * in the controller. This can be useful in operations such as CRUD on
+ * slides. 
+ *
+ * When explicitly forcing a current slide index change
+ * (i.e. scope.state) the timeline will not be reloaded; only the
+ * slide will move using the timeline.reload function of a TimelineJS
+ * instance
+ *
+ * See README.md for usage more instructions.
  */
 angular.module('pippTimelineDirectives', [])
 .directive('pippTimelineJS', function ($rootScope, $timeout) {
@@ -124,6 +136,9 @@ angular.module('pippTimelineDirectives', [])
         // Source not ready (maybe waiting on service or other async call)
         if (!newSource) {
           console.log("Waiting for source data");
+          return;
+        } else if (newSource.timeline.date.length === 0) {
+          console.log("Source defined but no stories in it");
           return;
         }
         newSource = format(newSource, formatStory);
